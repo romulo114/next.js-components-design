@@ -1,0 +1,55 @@
+@import '../../assets/styles/variables';
+
+$variants: primary, secondary, dark, danger;
+$colors: $primary_color, $secondary_color, $dark_color, $danger_color;
+$hover_colors: $primary_hover_color, $secondary_hover_color, $dark_hover_color, $danger_hover_color;
+@function get_color($variant) {
+  $idx: index($variants, $variant);
+  @return nth($colors, $idx);
+}
+
+@function get_hover_color($variant) {
+  $idx: index($variants, $variant);
+  @return nth($hover_colors, $idx);
+}
+
+@mixin btn-colors($variant) {
+  $color: get_color($variant);
+  $hover: get_hover_color($variant);
+  &.btn-#{$variant} {
+    color: white;
+    background-color: $color;
+
+    &:hover {
+      background-color: $hover;
+    }
+
+    &.outlined {
+      outline: 1px solid $color;
+      color: $color;
+      background-color: transparent;
+
+      &:hover {
+        background-color: $color;
+        color: white;
+      }
+    }
+  }
+}
+
+
+.btn {
+  font-size: 16px;
+  border-radius: 2px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  
+  @include btn-colors('primary');
+  @include btn-colors('secondary');
+  @include btn-colors('dark');
+  @include btn-colors('danger');
+}

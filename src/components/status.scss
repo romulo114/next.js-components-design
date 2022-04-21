@@ -1,0 +1,14 @@
+@import '../assets/styles/variables';
+
+.status {
+  width: 16px;
+  height: 16px;
+  display: block;
+
+  &.success {
+    color: $success_color;
+  }
+  &.fail {
+    color: $danger_color;
+  }
+}

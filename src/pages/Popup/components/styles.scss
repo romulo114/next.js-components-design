@@ -1,0 +1,92 @@
+@import '../../../assets/styles/variables.scss';
+
+header {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid $border_color;
+  gap: 8px;
+  padding: 16px;
+
+  & .title {
+    display: flex;
+    justify-content: space-between;
+
+    & .logo {
+      width: 32px;
+      height: 32px;
+    }
+
+    & .option {
+      border: 1px solid $border_color;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+
+      & .setting {
+        width: 16px;
+        height: 16px;
+        padding: 8px;
+        color: $primary_color;
+      }
+    }
+
+  }
+
+  & .content {
+    color: $primary_color;
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+  }
+}
+
+footer {
+  border-top: 1px solid $border_color;
+  a {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 24px 16px;
+    font-size: 16px;
+    color: $primary_color;
+    text-decoration: none;
+  
+    & .arrow {
+      width: 20px;
+      height: 20px;
+      margin-left: 8px;
+    }
+  }
+}
+
+main {
+  color: $primary_color;
+  font-size: 14px;
+
+  & .history-item {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &.empty {
+      color: #333;
+      text-align: center;
+      display: block;
+
+      & p {
+        margin: 0;
+      }
+    }
+
+    & .link {
+      color: $primary_color;
+      text-decoration: none;
+      flex-grow: 1;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $border_color2;
+    }
+  }
+}

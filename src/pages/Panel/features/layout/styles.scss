@@ -1,0 +1,34 @@
+@import '../../../../assets/styles/variables';
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $background_color;
+  padding: 16px 32px;
+  height: 96px;
+  gap: 8px;
+
+  & .title {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+
+    & .logo {
+      width: 32px;
+      height: 32px;
+    }
+
+    & .content {
+      color: $light_gray;
+      font-size: 20px;
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  & .action {
+    display: flex;
+  }
+}

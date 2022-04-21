@@ -1,0 +1,44 @@
+@import '../../../../assets/styles/variables';
+
+.history-table {
+  width: 100%;
+  border-spacing: 0;
+
+  & .table-header {
+    background-color: $light_gray;
+    
+    & .header__item {
+      font-size: 16px;
+      font-weight: 500;
+      padding: 8px 12px;
+    }
+  }
+  
+  & tr.history-item {
+    cursor: pointer;
+
+    & td {
+      padding: 8px 6px;
+      font-size: 14px;
+    }
+    & td.item {
+      &__name {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        & .name {
+          color: $success_color;
+        }
+      }
+
+      &__time, &__result {
+        text-align: center;
+      }
+
+      &__status {
+        & > span { margin: auto; }
+      }
+    }
+  }
+}

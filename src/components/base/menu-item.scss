@@ -1,0 +1,32 @@
+@import '../../assets/styles/variables';
+
+.menu-item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 8px;
+  font-size: 16px;
+  color: #666;
+
+  & .arrow {
+    display: none;
+  }
+
+  &.active {
+    font-weight: 600;
+    color: #333;
+
+    & .arrow {
+      display: block;
+      width: 16px;
+      height: 16px;
+      margin-left: 8px;
+      margin-right: 8px;
+    }
+  } 
+
+  &:not(:last-child) {
+    border-bottom: 1px solid $border_color2;
+  }
+}

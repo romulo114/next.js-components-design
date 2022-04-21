@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "FSIO chrome extension",
+  "description": "A chrome extension for easy access to the filescan service",
+  "options_page": "panel.html?tab=setting",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon-32.png"
+  },
+  "icons": {
+    "128": "icon-128.png",
+    "48": "icon-48.png",
+    "16": "icon-16.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "css": [
+        "content.styles.css"
+      ]
+    }
+  ],
+  "devtools_page": "devtools.html",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content.styles.css",
+        "icon-128.png",
+        "icon-48.png",
+        "icon-32.png",
+        "icon-16.png"
+      ],
+      "matches": []
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "contextMenus",
+    "storage",
+    "<all_urls>"
+  ]
+}

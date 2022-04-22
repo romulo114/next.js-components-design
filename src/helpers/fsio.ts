@@ -40,12 +40,11 @@ export async function scanLink(url: string) {
     const baseUrl = await getBaseURL()
 
     const client = new HttpClient(baseUrl, apiKey)
-    // const response = await client.post('/api/scan/url', { url })
+    const response = await client.post('/api/scan/url', { url })
 
-    // const { flow_id } = response
-    // if (!flow_id) throw Error('Invalid flow id')
+    const { flow_id } = response
+    if (!flow_id) throw Error('Invalid flow id')
 
-    const flow_id = '625ff474eab80a7a6c4a446d'
     const params = 'filter=finalVerdict&filter=general&filter=taskReference&filter=overallState&filter=subtaskReferences&sorting=allSignalGroups%28description%3Aasc%2CaverageSignalStrength%3Adesc%29&sorting=allTags%28tag.name%3Aasc%29'
     while (true) {
       const result = await client.get(`/api/scan/${flow_id}/report`, params)

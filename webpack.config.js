@@ -42,10 +42,10 @@ var options = {
     panel: path.join(__dirname, 'src', 'pages', 'Panel', 'index.tsx'),
   },
   chromeExtensionBoilerplate: {
-    notHotReload: ['background', 'contentScript', 'devtools'],
+    notHotReload: ['background', 'contentScript'],
   },
   output: {
-    filename: '[name].js',
+    filename: 'scripts/[name].js',
     path: path.resolve(__dirname, 'build'),
     clean: true,
     publicPath: ASSET_PATH,
@@ -75,6 +75,10 @@ var options = {
         test: new RegExp('.(' + fileExtensions.join('|') + ')$'),
         type: 'asset/resource',
         exclude: /node_modules/,
+        generator: {
+          publicPath: '/images/',
+          outputPath: 'images/'
+        },
         // loader: 'file-loader',
         // options: {
         //   name: '[name].[ext]',
@@ -84,6 +88,9 @@ var options = {
         test: /\.html$/,
         loader: 'html-loader',
         exclude: /node_modules/,
+        options: {
+          minimize: true,
+        }
       },
       { test: /\.(ts|tsx)$/, loader: 'ts-loader', exclude: /node_modules/ },
       {
@@ -133,17 +140,8 @@ var options = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: 'src/pages/Content/content.styles.css',
-          to: path.join(__dirname, 'build'),
-          force: true,
-        },
-      ],
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
           from: 'src/assets/images/icon-128.png',
-          to: path.join(__dirname, 'build'),
+          to: path.join(__dirname, 'build', 'images'),
           force: true,
         },
       ],
@@ -152,7 +150,7 @@ var options = {
       patterns: [
         {
           from: 'src/assets/images/icon-48.png',
-          to: path.join(__dirname, 'build'),
+          to: path.join(__dirname, 'build', 'images'),
           force: true,
         },
       ],
@@ -161,7 +159,7 @@ var options = {
       patterns: [
         {
           from: 'src/assets/images/icon-32.png',
-          to: path.join(__dirname, 'build'),
+          to: path.join(__dirname, 'build', 'images'),
           force: true,
         },
       ],
@@ -170,26 +168,20 @@ var options = {
       patterns: [
         {
           from: 'src/assets/images/icon-16.png',
-          to: path.join(__dirname, 'build'),
+          to: path.join(__dirname, 'build', 'images'),
           force: true,
         },
       ],
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'pages', 'Popup', 'index.html'),
-      filename: 'popup.html',
+      filename: 'html/popup.html',
       chunks: ['popup'],
       cache: false,
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'pages', 'Devtools', 'index.html'),
-      filename: 'devtools.html',
-      chunks: ['devtools'],
-      cache: false,
-    }),
-    new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'pages', 'Panel', 'index.html'),
-      filename: 'panel.html',
+      filename: 'html/panel.html',
       chunks: ['panel'],
       cache: false,
     }),

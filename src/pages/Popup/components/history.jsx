@@ -15,6 +15,7 @@ export const History = () => {
       if (message.finished) {
         command('get_history').then(result => {
           setPending([])
+          result.sort((a, b) => a.created > b.created ? -1 : a.created < b.created ? 1 : 0)
           setItems(result)
         })
       } else {

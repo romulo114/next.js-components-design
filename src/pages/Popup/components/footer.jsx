@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <footer>
       <a
-        href={chrome.runtime.getURL('panel.html') + '?tab=history'}
+        href={chrome.runtime.getURL('html/panel.html') + '?tab=history'}
         target='_blank'
         rel='noreferrer'
       >

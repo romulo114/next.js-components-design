@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import logo from '../../../assets/images/icon-32.png';
 import setting from '../../../assets/icons/settings.svg';
 import './styles.scss';
@@ -9,7 +9,7 @@ export const Header = () => {
       <div className='title'>
         <img src={logo} className="logo" alt="logo" />
         <div className='option'>
-          <a href={chrome.runtime.getURL("panel.html?tab=setting")} target='_blank' rel="noreferrer">
+          <a href={chrome.runtime.getURL("html/panel.html?tab=setting")} target='_blank' rel="noreferrer">
             <img src={setting} className="setting" alt="setting" />
           </a>
         </div>

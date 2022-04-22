@@ -83,6 +83,10 @@ main {
       color: $primary_color;
       text-decoration: none;
       flex-grow: 1;
+      max-width: 320px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     &:not(:last-child) {

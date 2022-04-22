@@ -10,7 +10,7 @@ chrome.runtime.onInstalled.addListener(function () {
   })
 
   chrome.tabs.create({
-    url: chrome.runtime.getURL('panel.html?tab=setting')
+    url: chrome.runtime.getURL('html/panel.html?tab=setting')
   });
 });
 

@@ -21,7 +21,9 @@ export const History = () => {
       if (message.finished) {
         command('get_history').then(result => {
           setPending([])
-          setItems(result as ScanInfo[])
+          const history = result as ScanInfo[]
+          history.sort((a, b) => a.created > b.created ? -1 : a.created < b.created ? 1 : 0)
+          setItems(history)
         })
       } else {
         setPending(message.scans)
@@ -42,7 +44,7 @@ export const History = () => {
     }
   }, [])
 
-  const filtered = [...items, ...pending].filter(item => {
+  const filtered = [...pending, ...items].filter(item => {
     return (
       item.name.includes(search) ||
       item.hash.includes(search) ||

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button } from '../../../../components/base/button';
-import { PRODUCT_NAME, DEFAULT_BASE_URL } from '../../settings';
+import { DEFAULT_BASE_URL } from '../../settings';
 import { getBaseURL, saveBaseURL } from '../../../../helpers/storage';
 import { Modal } from '../../../../components/base/modal';
 import { Clipboard } from '../../../../components/base/clipboard';
@@ -11,7 +11,6 @@ import './styles.scss';
 export const Header = () => {
 
   const [window, setWindow] = useState<chrome.windows.Window | null>(null)
-  const [baseUrl, setBaseUrl] = useState('')
   const [modal, setModal] = useState(false)
   const [apiKey, setApiKey] = useState('')
 
@@ -19,7 +18,6 @@ export const Header = () => {
     async function init() {
       const base = await getBaseURL() || DEFAULT_BASE_URL
       await saveBaseURL(base)
-      setBaseUrl(base)
     }
 
     init()
@@ -36,7 +34,7 @@ export const Header = () => {
     const body = await response.json()
     let api_key = ''
     if (response.status !== 200) {
-      if (globalThis.confirm(`${body.detail}. Do you want to re-generate the API key?`)) {
+      if (globalThis.confirm(`The underlying user account already has an active API key. Do you want to re-generate the API key?`)) {
         await fetch(`${baseUrl}/api/users/api-key/remove`, {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` }
@@ -58,7 +56,7 @@ export const Header = () => {
       setApiKey(api_key)
       setModal(true)
     }
-  }, [baseUrl])
+  }, [])
 
   useEffect(() => {
     const removeListener = function (id: number) {
@@ -111,7 +109,15 @@ export const Header = () => {
     <header>
       <section className="title">
         <img src={logo} className="logo" alt="logo" />
-        <h4 className="content">{PRODUCT_NAME}</h4>
+        <section className='content'>
+          <h4 className='subtitle'>
+            FileScan.IO
+            <span>&nbsp;-&nbsp;Next-Gen Malware Analysis</span>
+          </h4>
+          <p className='description'>
+            Detect Threats using Rapid Dynamic Analysis
+          </p>
+        </section>
       </section>
       <section className="action">
         <Button onClick={handleSignin}>

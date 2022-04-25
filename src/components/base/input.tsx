@@ -1,15 +1,16 @@
 import React from 'react';
 import './input.scss';
 
-type InputProps = {
+export type InputProps = {
   label: string;
   value: string | number;
   onChange: (value: string) => void;
   type?: string;
   className?: string;
+  disabled?: boolean
 }
 export const Input = (props: InputProps) => {
-  const { label, value, onChange, type, className } = props
+  const { label, value, onChange, type, className, disabled } = props
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value)
   }
@@ -22,6 +23,7 @@ export const Input = (props: InputProps) => {
         className='input'
         value={value}
         onChange={handleChange}
+        disabled={disabled}
       />
     </div>
   )

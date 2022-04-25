@@ -33,10 +33,26 @@ header {
   }
 
   & .content {
-    color: $primary_color;
-    margin: 0;
-    font-size: 24px;
-    font-weight: 500;
+    & > .subtitle {
+      display: flex;
+      align-items: flex-end;
+      color: $primary_color;
+      margin: 0;
+      font-size: 20px;
+      font-weight: 500;
+
+      & span {
+        color: $dark_gray;
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+
+    & .description {
+      font-size: 14px;
+      color: $dark_gray;
+      margin: 8px 0;
+    }
   }
 }
 

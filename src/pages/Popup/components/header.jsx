@@ -6,15 +6,24 @@ import './styles.scss';
 export const Header = () => {
   return (
     <header>
-      <div className='title'>
+      <section className='title'>
         <img src={logo} className="logo" alt="logo" />
         <div className='option'>
           <a href={chrome.runtime.getURL("html/panel.html?tab=setting")} target='_blank' rel="noreferrer">
             <img src={setting} className="setting" alt="setting" />
           </a>
         </div>
-      </div>
-      <h4 className='content'>FSIO client for chrome</h4>
+      </section>
+      <section className='content'>
+        <h4 className='subtitle'>
+          FileScan.IO
+          <span>&nbsp;-&nbsp;Next-Gen Malware Analysis</span>
+        </h4>
+        <p className='description'>
+          Detect Threats using Rapid Dynamic Analysis
+        </p>
+
+      </section>
     </header>
   )
 }

@@ -4,7 +4,7 @@ import { FSIO_MENU_ID } from '../../helpers/constants';
 
 chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
-    title: `Scan with FileScan.IO Client`,
+    title: `Scan with FileScan.IO`,
     contexts: ['link'],
     id: FSIO_MENU_ID
   })

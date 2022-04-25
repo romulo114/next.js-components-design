@@ -1,5 +1,6 @@
 import { getApiKey, getBaseURL, getHistory, saveHistory } from "./storage";
 import { HttpClient } from './service';
+import { notify } from "./notification";
 import { ScanInfo } from "../types";
 
 
@@ -45,6 +46,9 @@ export async function scanLink(url: string) {
     const { flow_id } = response
     if (!flow_id) throw Error('Invalid flow id')
 
+    const name = url.substring(url.lastIndexOf('/') + 1)
+    notify(`Scan started for ${name}`, 5000);
+
     const params = 'filter=finalVerdict&filter=general&filter=taskReference&filter=overallState&filter=subtaskReferences&sorting=allSignalGroups%28description%3Aasc%2CaverageSignalStrength%3Adesc%29&sorting=allTags%28tag.name%3Aasc%29'
     while (true) {
       const result = await client.get(`/api/scan/${flow_id}/report`, params)
@@ -55,6 +59,9 @@ export async function scanLink(url: string) {
           if (isAllFinished(scans) && scans.length > 0) {
             const history = await getHistory()
             await saveHistory([...history, ...scans])
+
+            notify(`Scan started for ${name}`, 5000);
+
             chrome.runtime.sendMessage({ type: 'scanning', finished: true, scans })
             break
           } else {
@@ -63,9 +70,13 @@ export async function scanLink(url: string) {
         }
       } catch (e) {
         console.log(e)
+
+        notify(`Error occured during scanning: ${e}`, 5000);
+
+        break
       }
 
-      await sleep(2000)
+      await sleep(1000)
     }
   } catch (e) {
     console.log(e)

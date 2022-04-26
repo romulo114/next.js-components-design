@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '../../../../components/base/button';
 import { Divider } from '../../../../components/base/divider';
 import { Input } from '../../../../components/base/input';
-import { SecInput } from '../../components';
+import { SecInput } from '../../components/input/sec-input';
 import { Spinner } from '../../../../components/base/spinner';
 import { getApiKey, getBaseURL, saveApiKey, saveBaseURL } from '../../../../helpers/storage';
 
@@ -17,11 +17,11 @@ export const Setting = () => {
       const key = await getApiKey();
       const url = await getBaseURL();
 
-      setApiKey(key ?? '')
-      setBaseUrl(url ?? '')
+      setApiKey(key ?? '');
+      setBaseUrl(url ?? '');
     }
 
-    init()
+    init();
   }, [])
 
   const handleSave = async () => {
@@ -54,7 +54,7 @@ export const Setting = () => {
     <div className='setting-page'>
       <section className='base-setting'>
         <Input value={baseUrl} onChange={setBaseUrl} label='Service URL' />
-        <SecInput value={apiKey} onChange={setApiKey} label='API Key' />
+        <SecInput value={apiKey} onChange={setApiKey} label='API Key' note='Required only for private instances' />
         <div className='actions'>
           <p className={status.error ? 'error' : 'success'}>
             {status.message}

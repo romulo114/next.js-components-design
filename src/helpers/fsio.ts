@@ -41,45 +41,69 @@ export async function scanLink(url: string) {
     const baseUrl = await getBaseURL();
 
     const client = new HttpClient(baseUrl, apiKey);
+    const name = url.substring(url.lastIndexOf('/') + 1);
+    notify(`Scan started for ${name}`, 5000);
     const response = await client.post('/api/scan/url', { url });
 
     const { flow_id } = response;
     if (!flow_id) throw Error('Invalid flow id');
 
-    const name = url.substring(url.lastIndexOf('/') + 1);
-    notify(`Scan started for ${name}`, 5000);
-
-    const params = 'filter=finalVerdict&filter=general&filter=taskReference&filter=overallState&filter=subtaskReferences&sorting=allSignalGroups%28description%3Aasc%2CaverageSignalStrength%3Adesc%29&sorting=allTags%28tag.name%3Aasc%29'
-    while (true) {
-      const result = await client.get(`/api/scan/${flow_id}/report`, params);
-      const scans = parseReport(baseUrl, flow_id, result);
-
-      try {
-        if (scans) {
-          if (isAllFinished(scans) && scans.length > 0) {
-            const history = await getHistory();
-            await saveHistory([...history, ...scans]);
-
-            notify(`Scan completed: ${getVerdict(scans)}`, 5000);
-
-            chrome.runtime.sendMessage({ type: 'scanning', finished: true, scans });
-            break;
-          } else {
-            chrome.runtime.sendMessage({ type: 'scanning', scans });
-          }
-        }
-      } catch (e) {
-        console.log(e);
-
-        notify(`Error occured during scanning: ${e}`, 5000);
-
-        break;
-      }
-
-      await sleep(1000);
-    }
+    await waitForComplete(client, baseUrl, flow_id);
   } catch (e) {
     console.log(e);
+  }
+}
+
+export async function scanFile(file: File) {
+  try {
+    const apiKey = await getApiKey();
+    const baseUrl = await getBaseURL();
+
+    const client = new HttpClient(baseUrl, apiKey);
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    const name = file.name;
+    notify(`Scan started for ${name}`, 5000);
+
+    const response = await client.postForm('/api/scan/file', formData);
+    const { flow_id } = response;
+    if (!flow_id) throw Error('Invalid flow id');
+
+    await waitForComplete(client, baseUrl, flow_id);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function waitForComplete(client: HttpClient, baseUrl: string, flowId: string) {
+  const params = 'filter=finalVerdict&filter=general&filter=taskReference&filter=overallState&filter=subtaskReferences&sorting=allSignalGroups%28description%3Aasc%2CaverageSignalStrength%3Adesc%29&sorting=allTags%28tag.name%3Aasc%29'
+  while (true) {
+    const result = await client.get(`/api/scan/${flowId}/report`, params);
+    const scans = parseReport(baseUrl, flowId, result);
+
+    try {
+      if (scans) {
+        if (isAllFinished(scans) && scans.length > 0) {
+          const history = await getHistory();
+          await saveHistory([...history, ...scans]);
+
+          notify(`Scan completed: ${getVerdict(scans)}`, 5000);
+
+          chrome.runtime.sendMessage({ type: 'scanning', finished: true, scans });
+          break;
+        } else {
+          chrome.runtime.sendMessage({ type: 'scanning', scans });
+        }
+      }
+    } catch (e) {
+      console.log(e);
+
+      notify(`Error occured during scanning: ${e}`, 5000);
+
+      break;
+    }
+
+    await sleep(1000);
   }
 }
 

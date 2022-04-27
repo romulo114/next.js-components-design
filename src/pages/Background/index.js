@@ -55,7 +55,6 @@ chrome.downloads.onChanged.addListener(async function (delta) {
       if (file.totalBytes === 0) continue;
       const url = 'file:///' + file.filename.replace(/\\/g, '/');
       getFileObjectFromURL(url, (file) => {
-        console.log(file)
         scanFile(file);
       })
     }
@@ -63,10 +62,7 @@ chrome.downloads.onChanged.addListener(async function (delta) {
 });
 
 function getFileBlobUsingURL(url, convertBlob) {
-  fetch(url).then(res => {
-    console.log(res);
-    return res.blob()
-  }).then(blob => convertBlob(blob));
+  fetch(url).then(res => res.blob()).then(blob => convertBlob(blob));
 }
 
 var blobToFile = function (blob, name, type) {

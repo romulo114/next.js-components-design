@@ -1,4 +1,4 @@
-import { getApiKey, getBaseURL, getHistory, saveHistory } from "./storage";
+import { getApiKey, getBaseURL, getHistory, getMaxFileSize, getScanDownload, saveHistory } from "./storage";
 import { HttpClient } from './service';
 import { notify } from "./notification";
 import { ScanInfo } from "../types";
@@ -58,6 +58,14 @@ export async function scanFile(file: File) {
   try {
     const apiKey = await getApiKey();
     const baseUrl = await getBaseURL();
+    const enable = await getScanDownload()
+    const sizeLmt = await getMaxFileSize();
+
+    if (!enable) return;
+    if (file.size > sizeLmt) {
+      notify(`File is too large(Limit: ${sizeLmt})`, 5000);
+      return;
+    }
 
     const client = new HttpClient(baseUrl, apiKey);
     const formData = new FormData();

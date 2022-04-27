@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '../../../../components/base/button';
 import { Divider } from '../../../../components/base/divider';
 import { Input } from '../../../../components/base/input';
+import { Check } from '../../../../components/base/check';
 import { SecInput } from '../../components/input/sec-input';
 import { Spinner } from '../../../../components/base/spinner';
-import { getApiKey, getBaseURL, saveApiKey, saveBaseURL } from '../../../../helpers/storage';
+import { getApiKey, getBaseURL, getMaxFileSize, getScanDownload, saveApiKey, saveBaseURL, saveMaxFileSize, saveScanDownload } from '../../../../helpers/storage';
 
 export const Setting = () => {
   const [baseUrl, setBaseUrl] = useState('')
   const [apiKey, setApiKey] = useState('')
+  const [scanDownload, setScanDownload] = useState(false);
+  const [maxSize, setMaxSize] = useState(0);
   const [busy, setBusy] = useState(false)
   const [status, setStatus] = useState({ error: false, message: '' })
 
@@ -16,9 +19,13 @@ export const Setting = () => {
     async function init() {
       const key = await getApiKey();
       const url = await getBaseURL();
+      const scan = await getScanDownload();
+      const size = await getMaxFileSize();
 
       setApiKey(key ?? '');
       setBaseUrl(url ?? '');
+      setScanDownload(scan ?? false);
+      setMaxSize(size ?? 0);
     }
 
     init();
@@ -28,7 +35,9 @@ export const Setting = () => {
     try {
       setBusy(true)
       await saveApiKey(apiKey);
-      await saveBaseURL(baseUrl)
+      await saveBaseURL(baseUrl);
+      await saveScanDownload(scanDownload);
+      await saveMaxFileSize(maxSize);
       setStatus({ error: false, message: 'Successfully saved' })
     } catch (e: any) {
       setStatus({ error: true, message: e.message })
@@ -55,6 +64,8 @@ export const Setting = () => {
       <section className='base-setting'>
         <Input value={baseUrl} onChange={setBaseUrl} label='Service URL' />
         <SecInput value={apiKey} onChange={setApiKey} label='API Key' note='Required only for private instances' />
+        <Check value={scanDownload} onChange={setScanDownload} label='Scan Downloaded Files' />
+        <Input value={maxSize} disabled={!scanDownload} onChange={(value) => setMaxSize(+value)} label='Max File Size' />
         <div className='actions'>
           <p className={status.error ? 'error' : 'success'}>
             {status.message}

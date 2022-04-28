@@ -3,12 +3,6 @@ import { scanFile, scanLink } from '../../helpers/fsio';
 import { FSIO_MENU_ID } from '../../helpers/constants';
 
 chrome.runtime.onInstalled.addListener(function () {
-  chrome.contextMenus.create({
-    title: `Scan with FileScan.IO`,
-    contexts: ['link'],
-    id: FSIO_MENU_ID
-  })
-
   chrome.tabs.create({
     url: chrome.runtime.getURL('html/panel.html?tab=setting')
   });

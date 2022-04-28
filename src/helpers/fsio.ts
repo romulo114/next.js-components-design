@@ -58,11 +58,11 @@ export async function scanFile(file: File) {
   try {
     const apiKey = await getApiKey();
     const baseUrl = await getBaseURL();
-    const enable = await getScanDownload()
-    const sizeLmt = await getMaxFileSize();
+    const enable = (await getScanDownload()) ?? false
+    const sizeLmt = (await getMaxFileSize()) ?? 0;
 
     if (!enable) return;
-    if (file.size > sizeLmt) {
+    if (sizeLmt > 0 && file.size > sizeLmt) {
       notify(`File is too large(Limit: ${sizeLmt})`, 5000);
       return;
     }

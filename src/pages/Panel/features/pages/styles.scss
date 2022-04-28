@@ -48,6 +48,23 @@
     font-size: 16px;
     color: $dark_gray;
 
+    & .accept {
+      max-width: 640px;
+      font-size: 14px;
+      
+      & > .checkbox {
+        border: 1px solid $secondary_color;
+        padding: 8px 16px;
+        margin-left: 30%;
+        display: flex;
+        align-items: center;
+
+        & > input {
+          margin-right: 12px;
+        }
+      }
+    }
+
     & .base-setting {
       max-width: 640px;
       display: flex;

@@ -1,11 +1,13 @@
 import { ScanInfo } from "../types";
 import { storage } from "./base";
+import { FSIO_MENU_ID } from './constants';
 
 const KEY_API_KEY = 'api_key'
 const KEY_BASE_URL = 'base_url'
 const KEY_SCAN_DOWNLOAD = 'scan_download'
 const KEY_MAX_FILE_SIZE = 'max_filesize'
 const KEY_SCAN_HISTORY = 'scan_history'
+const KEY_ACCEPTED = 'key_accepted'
 
 export async function saveApiKey(key: string) {
   return await storage.set(KEY_API_KEY, key)
@@ -54,4 +56,23 @@ export async function getHistory() {
   }
 
   return result[KEY_SCAN_HISTORY]
+}
+
+export async function getAccepted() {
+  const result = await storage.get(KEY_ACCEPTED)
+  return result[KEY_ACCEPTED]
+}
+
+export async function saveAccepted() {
+  chrome.contextMenus.create({
+    title: `Scan with FileScan.IO`,
+    contexts: ['link'],
+    id: FSIO_MENU_ID
+  })
+  return await storage.set(KEY_ACCEPTED, true)
+}
+
+export async function clearAccepted() {
+  chrome.contextMenus.remove(FSIO_MENU_ID)
+  return await storage.set(KEY_ACCEPTED, false)
 }

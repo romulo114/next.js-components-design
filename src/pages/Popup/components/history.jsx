@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Status } from '../../../components/status';
+import { Verdict } from '../../../components/verdict';
 import { command } from '../../../helpers/command';
 import './styles.scss';
 
@@ -49,6 +50,7 @@ export const History = () => {
       )}
       {!top3.length || top3.map((item, idx) => (
         <section className='history-item' key={idx}>
+          <Verdict value={item.verdict} />
           <a href={item.link} target='_blank' rel='noreferrer' className='link'>
             {item.name}
           </a>

@@ -1,29 +1,28 @@
 import React from 'react';
-import './input.scss';
+import './check.scss';
 
-export type InputProps = {
+export type CheckProps = {
   label: string;
-  value: string | number;
-  onChange: (value: string) => void;
-  type?: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
   className?: string;
   disabled?: boolean;
   note?: string;
 }
-export const Input = (props: InputProps) => {
-  const { label, value, onChange, type, note, className, disabled } = props
+export const Check = (props: CheckProps) => {
+  const { label, value, onChange, note, className, disabled } = props
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value)
+    onChange(e.target.checked)
   }
 
   return (
-    <div className={'base-input ' + (className ?? '')}>
+    <div className={'base-check ' + (className ?? '')}>
       <span className='label'>{label}</span>
-      <div className='input-box'>
+      <div className='check-box'>
         <input
-          type={type ?? 'text'}
+          type='checkbox'
           className='input'
-          value={value}
+          checked={value}
           onChange={handleChange}
           disabled={disabled}
         />

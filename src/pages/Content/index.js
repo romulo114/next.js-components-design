@@ -28,7 +28,9 @@ async function main() {
     return
   }
 
-  clearToken()
+  if (window.location.pathname === '/auth/signin') {
+    clearToken()
+  }
   const token = await waitForToken()
   chrome.runtime.sendMessage({ token })
 }

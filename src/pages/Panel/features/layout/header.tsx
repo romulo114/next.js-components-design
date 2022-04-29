@@ -121,7 +121,7 @@ export const Header = () => {
       </section>
       <section className="action">
         <Button onClick={handleSignin}>
-          Sign In
+          Generate API Key
         </Button>
       </section>
       {modal && (

@@ -1,7 +1,7 @@
-export function notify(msg: string, duration: number = 5000) {
+export function notify(msg: string, duration: number, icon: string = '/images/icon-48.png') {
   chrome.notifications.create({
     type: 'basic',
-    iconUrl: '/images/icon-48.png',
+    iconUrl: icon,
     title: 'FileScan.IO for chrome',
     message: msg,
     isClickable: true,

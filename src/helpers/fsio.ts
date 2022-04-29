@@ -95,7 +95,9 @@ async function waitForComplete(client: HttpClient, baseUrl: string, flowId: stri
           const history = await getHistory();
           await saveHistory([...history, ...scans]);
 
-          notify(`Scan completed: ${getVerdict(scans)}`, 5000);
+          const verdict = getVerdict(scans);
+
+          notify(`Scan completed: ${verdict}`, 5000, `/images/icon-48${getIconForVerdict(verdict)}.png`);
 
           chrome.runtime.sendMessage({ type: 'scanning', finished: true, scans });
           break;
@@ -144,4 +146,11 @@ function getVerdict(scans: ScanInfo[]) {
   }
 
   return verdicts[minIdx];
+}
+
+function getIconForVerdict(verdict: string): string {
+  if (verdict === 'malicious') return 'm';
+  else if (verdict === 'likely_malicious') return 'lm';
+  else if (verdict === 'suspicious') return 's';
+  else return '';
 }

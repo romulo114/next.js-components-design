@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "FSIO Chrome Extension",
-  "description": "A chrome extension for easy access to the filescan service",
+  "name": "FileScan.IO Chrome Extension",
+  "description": "The official FileScan.IO Chrome Extension for rapid dynamic analysis of files and URLs",
   "options_page": "html/panel.html?tab=setting",
   "background": {
     "service_worker": "scripts/background.js"

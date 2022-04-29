@@ -1,5 +1,5 @@
 {
-  "name": "fsio-chrome-extension",
+  "name": "filescanio-chrome-extension",
   "version": "1.0",
   "description": "The official FileScan.IO Chrome Extension for rapid dynamic analysis of files and URLs",
   "license": "MIT",

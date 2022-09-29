@@ -38,13 +38,15 @@
       "matches": []
     }
   ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "permissions": [
     "activeTab",
     "tabs",
     "contextMenus",
     "storage",
     "notifications",
-    "downloads",
-    "<all_urls>"
+    "downloads"
   ]
 }
